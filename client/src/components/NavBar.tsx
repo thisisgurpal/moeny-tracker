@@ -34,8 +34,8 @@ const NavBar = () => {
                 </ButtonGroup>
                 <Spacer />
                 <ButtonGroup gap='2' display={{ base: "none", lg: "block" }}>
-                    <Button colorScheme='twitter'>Sign Up</Button>
-                    <Button variant='outline' colorScheme='twitter'>Log In</Button>
+                    <Button rounded={100} bgGradient='linear(to-l, #7928CA, #00ACEE)' textColor='white'>Sign Up</Button>
+                    <Button rounded={100} variant='outline' colorScheme='twitter'>Log In</Button>
                 </ButtonGroup>
                 <Box display={{ base: "block", lg: "none" }}>
                 <Menu >
