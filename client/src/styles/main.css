@@ -2,3 +2,7 @@
     width: 1000px;
     background-color: white
 }
+
+.blur {
+    filter: blur(10px);
+  }

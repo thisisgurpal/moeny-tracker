@@ -1,5 +1,7 @@
 import { Box, Button, Center, Flex, Spacer, Heading, ButtonGroup, IconButton } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import { userIsAuthenticated, getTokenFromLocalStorage } from './helper/auth'
+import axios from 'axios';
 import {
     Menu,
     MenuButton,
@@ -8,8 +10,17 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
+    const navigate = useNavigate()
+    const handleLogout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault();
+        // Remove token
+        window.localStorage.removeItem('token');
+        // Redirect to the home page
+        navigate('/');
+    };
 
     return (
         <Flex minWidth='100%' justifyContent='center' h='100px' alignItems='center' gap='2' p='10'>
@@ -35,12 +46,23 @@ const NavBar = () => {
                 </Box>
                 <Spacer />
                 <ButtonGroup gap='2' display={{ base: "none", lg: "block" }}>
-                    <Button rounded={100} bgGradient='linear(to-l, #7928CA, #00ACEE)' textColor='white'>
-                    <Link to='/register'>Sign Up</Link>
-                    </Button>
-                    <Button rounded={100} variant='outline' colorScheme='twitter'>
-                        <Link to='/login'>Log In</Link>
-                    </Button>
+                    {userIsAuthenticated() ?
+                        <>
+                            <Link to='/' onClick={handleLogout}>
+                                <Button rounded={100} bgGradient='linear(to-l, #7928CA, #00ACEE)' textColor='white'>Log Out</Button>
+                            </Link>
+                        </>
+                        :
+                        <>
+                            <Link to='/register'>
+                                <Button rounded={100} bgGradient='linear(to-l, #7928CA, #00ACEE)' textColor='white'>Sign Up</Button>
+                            </Link>
+                            <Link to='/login'>
+                                <Button rounded={100} variant='outline' colorScheme='twitter'>Log In</Button>
+                            </Link>
+                        </>
+                    }
+
                 </ButtonGroup>
                 <Box display={{ base: "block", lg: "none" }}>
                     <Menu >
@@ -61,7 +83,7 @@ const NavBar = () => {
                                 About Us
                             </MenuItem>
                             <MenuItem>
-                            Dashboard
+                                Dashboard
                             </MenuItem>
                         </MenuList>
                     </Menu>

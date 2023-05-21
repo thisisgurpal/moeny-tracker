@@ -45,7 +45,7 @@ const Login = () => {
     try {
       const { data } = await axios.post('/api/auth/login/', formData);
       setTokenToLocalStorage(data.token);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setFormError(err.response?.data.message || 'An error occurred');
